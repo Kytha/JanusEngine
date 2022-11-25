@@ -12,6 +12,7 @@ SET ( JANUS_ENGINE_HEADERS
   include/JanusEngine/Core/Core.h
   include/JanusEngine/Core/EntryPoint.h
   include/JanusEngine/Core/Log.h
+  include/JanusEngine/jnpch.h
 )
 
 ############################# DEPENDENCIES ###########################################
@@ -22,6 +23,8 @@ ADD_LIBRARY ( JanusEngine STATIC
   )
 
 TARGET_INCLUDE_DIRECTORIES( JanusEngine PUBLIC include/JanusEngine)
-TARGET_PRECOMPILE_HEADERS( JanusEngine PUBLIC "src/jnpch.h")
+
+# TO DO: Reintroduce precompiled header once vscode C++ tools supports proper intelisense 
+#TARGET_PRECOMPILE_HEADERS( JanusEngine PUBLIC "src/jnpch.h")
     
 INSTALL ( TARGETS JanusEngine DESTINATION lib )

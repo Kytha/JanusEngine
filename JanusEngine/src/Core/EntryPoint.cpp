@@ -1,4 +1,5 @@
 #include "Core/EntryPoint.h"
+#include "jnpch.h"
 
 int entryPoint(int argc, const char** argv) 
 {
