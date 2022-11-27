@@ -75,10 +75,10 @@ make
 
 # Platform Support
 
-The Janus engine is intended to be a cross-platform engine to design cross-platform games. Applications built with the Janus Engine have only been officially tested on Windows, but in its current state should support the following platforms;
+The Janus Engine is intended to be a cross-platform engine to design cross-platform games. In its current state should support the following platforms;
 
 - Windows ✔️
-- Mac ❌
+- Mac ✔️
 - Linux ❌
 - Android ❌
 - IOS ❌
