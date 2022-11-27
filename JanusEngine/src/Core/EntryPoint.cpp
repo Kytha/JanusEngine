@@ -1,8 +1,13 @@
 #include "Core/EntryPoint.h"
 #include "jnpch.h"
+#include "Core/Memory/Memory.h"
 
-int entryPoint(int argc, const char** argv) 
+namespace JanusEngine
 {
-    std::cout << "Hello World";
-    return 0;
+    int entryPoint(int argc, const char** argv) 
+    {
+        std::cout << "Hello World";
+        return 0;
+    }    
 }
+

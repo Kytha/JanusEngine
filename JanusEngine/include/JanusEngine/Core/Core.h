@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdio.h>
+
 // DEBUG 
 
 #if defined(DEBUG) || defined(_DEBUG)
@@ -43,4 +45,6 @@
     #include "Windows.h"
 #endif
 
+#include "assert.h"
+using byte = uint8_t;
 // PROFILER
