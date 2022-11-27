@@ -15,7 +15,7 @@ namespace JanusEngine
   
     inline void Reset(void) {cursor = start;};
 
-    inline size_t LinearAllocator::GetAllocationSize(byte* allocation) const
+    inline size_t GetAllocationSize(byte* allocation) const
     {
         union
         {
