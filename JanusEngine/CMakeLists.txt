@@ -1,4 +1,6 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 3.14)
 PROJECT (JanusEngine LANGUAGES CXX C)
+SET(CMAKE_CXX_STANDARD 17)
 
 ########################### SOURCE CODE ########################################
 
@@ -36,7 +38,44 @@ ADD_LIBRARY ( JanusEngine STATIC
 
 TARGET_INCLUDE_DIRECTORIES( JanusEngine PUBLIC include/JanusEngine)
 
+############################# INSTALLATION ###########################################
+
 # TO DO: Reintroduce precompiled header once vscode C++ tools supports proper intelisense 
 #TARGET_PRECOMPILE_HEADERS( JanusEngine PUBLIC "src/jnpch.h")
     
 INSTALL ( TARGETS JanusEngine DESTINATION lib )
+
+
+############################# TESTING ###########################################
+
+SET( JANUS_ENGINE_TEST_SOURCE
+  tst/Core/Memory/LinearAllocatorTest.cc
+  tst/Core/Memory/MemoryArenaTest.cc
+)
+
+SET(DOWNLOAD_EXTRACT_TIMESTAMP true)
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/58d77fa8070e8cec2dc1ed015d66b454c8d78850.zip
+)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+SET(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
+ENABLE_TESTING()
+
+ADD_EXECUTABLE(
+  JanusEngineTest ${JANUS_ENGINE_TEST_SOURCE}
+)
+
+TARGET_INCLUDE_DIRECTORIES( JanusEngineTest PUBLIC include/JanusEngine)
+
+TARGET_LINK_LIBRARIES(
+  JanusEngineTest
+  JanusEngine
+  GTest::gtest_main
+)
+
+INCLUDE(GoogleTest)
+gtest_discover_tests(JanusEngineTest)

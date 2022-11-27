@@ -39,7 +39,7 @@ namespace JanusEngine
   typedef IntToType<true> PODType;
 
   template <typename T, class ARENA>
-  T* NewArray(ARENA& arena, size_t N, const byte* file, int line, NonPODType)
+  T* NewArray(ARENA& arena, size_t N, char const * file, int line, NonPODType)
   {
     union
     {
@@ -63,7 +63,7 @@ namespace JanusEngine
   }
   
   template <typename T, class ARENA>
-  T* NewArray(ARENA& arena, size_t N, const byte* file, int line, PODType)
+  T* NewArray(ARENA& arena, size_t N, char const * file, int line, PODType)
   {
     return (T*)(arena.Allocate(sizeof(T)*N, alignof(T), SourceInfo{file, line}));
   }

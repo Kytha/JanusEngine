@@ -7,7 +7,7 @@ namespace JanusEngine
     
     struct SourceInfo
     {
-    const unsigned char* file;
+    char const * file;
     int line;
     size_t size;
     };
