@@ -105,7 +105,5 @@ namespace JanusEngine
   #define JN_NEW_ARRAY(type, arena)    NewArray<TypeAndCount<type>::Type>(arena, TypeAndCount<type>::Count, __FILE__, __LINE__, IntToType<IsPOD<TypeAndCount<type>::Type>::Value>())
 
   #define JN_DELETE_ARRAY(object, arena)    DeleteArray(object, arena)
-
-  // ----------------------------------------- MEMORY AREAS ---------------------------------------
 }
 

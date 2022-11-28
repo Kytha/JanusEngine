@@ -30,6 +30,16 @@ namespace JanusEngine
         return (*as_size_t);
     }
 
+    inline size_t GetFreeSpace()
+    {
+      return (end - cursor);
+    }
+
+    inline size_t GetUsedSpace()
+    {
+      return (cursor - start);
+    }
+
   private:
     byte* end;
     byte* cursor;

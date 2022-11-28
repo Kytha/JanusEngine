@@ -14,6 +14,17 @@ namespace JanusEngine
         // offset pointer first, align it, and offset it back
         cursor = alignForward(cursor + offset, alignment) - offset;
         
+        // Store size of allocation sizeof(size_t) bytes before user data
+        union
+        {
+            void* as_void;
+            size_t* as_size_t;
+        };
+        as_void = cursor;
+        *as_size_t = size;
+
+        cursor += sizeof(size);
+
         byte* userPtr = cursor;
         cursor += size;
         
