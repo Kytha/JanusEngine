@@ -5,18 +5,19 @@ SET(CMAKE_CXX_STANDARD 17)
 ########################### SOURCE CODE ########################################
 
 SET ( JANUS_ENGINE_SOURCE
-  src/Core/Log.cpp
+  src/Core/Logging/Log.cpp
   src/Core/EntryPoint.cpp
   src/Core/Memory/Allocators.cpp
   src/Core/Memory/Memory.cpp
   src/Core/Memory/TrackingPolicy.cpp
+  src/Core/Logging/LogSink.cpp
 )
 
 
 SET ( JANUS_ENGINE_HEADERS
   include/JanusEngine/Core/Core.h
   include/JanusEngine/Core/EntryPoint.h
-  include/JanusEngine/Core/Log.h
+  include/JanusEngine/Core/Logging/Log.h
   include/JanusEngine/jnpch.h
   include/JanusEngine/Core/Memory/Memory.h
   include/JanusEngine/Core/Memory/MemoryArena.h
@@ -27,9 +28,12 @@ SET ( JANUS_ENGINE_HEADERS
   include/JanusEngine/Core/Memory/BoundsCheckingPolicy.h
   include/JanusEngine/Core/Memory/Utils.h
   include/JanusEngine/Core/Memory/MemoryArea.h
+  include/JanusEngine/Core/Logging/LogSink.h
 )
 
 ############################# DEPENDENCIES ###########################################
+
+ADD_SUBDIRECTORY(vendors/spdlog)
 
 ADD_LIBRARY ( JanusEngine STATIC
   ${JANUS_ENGINE_SOURCE}
@@ -37,6 +41,10 @@ ADD_LIBRARY ( JanusEngine STATIC
   )
 
 TARGET_INCLUDE_DIRECTORIES( JanusEngine PUBLIC include/JanusEngine)
+TARGET_INCLUDE_DIRECTORIES( JanusEngine PUBLIC vendors/spdlog/include)
+
+
+TARGET_LINK_LIBRARIES( JanusEngine PUBLIC spdlog)
 
 ############################# INSTALLATION ###########################################
 
@@ -50,7 +58,6 @@ INSTALL ( TARGETS JanusEngine DESTINATION lib )
 
 SET( JANUS_ENGINE_TEST_SOURCE
   tst/Core/Memory/LinearAllocatorTest.cc
-  tst/Core/Memory/MemoryArenaTest.cc
 )
 
 SET(DOWNLOAD_EXTRACT_TIMESTAMP true)
