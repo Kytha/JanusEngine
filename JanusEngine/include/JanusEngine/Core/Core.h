@@ -1,13 +1,14 @@
 #pragma once
 
 #include <stdio.h>
+#include <stdint.h>
 
-// DEBUG 
+// DEBUG
 
 #if defined(DEBUG) || defined(_DEBUG)
-    #define JANUS_DEBUG
+#define JANUS_DEBUG
 #else
-    #define JANUS_RELEASE
+#define JANUS_RELEASE
 #endif
 
 // PLATFORM
@@ -19,30 +20,30 @@
 #define PLATFORM_OSX 5
 
 #if defined(_WIN32)
-    #define PLATFORM PLATFORM_WINDOWS
+#define PLATFORM PLATFORM_WINDOWS
 #elif defined(_WIN64)
-    #define PLATFORM PLATFORM_WINDOWS
-#elif defined (__CYGWIN)
-    #define PLATFORM PLATFORM_WINDOWS
+#define PLATFORM PLATFORM_WINDOWS
+#elif defined(__CYGWIN)
+#define PLATFORM PLATFORM_WINDOWS
 #elif defined(__ANDROID__)
-    #define PLATFORM PLATFORM_ANDROID
+#define PLATFORM PLATFORM_ANDROID
 #elif defined(__linux__)
-    #define PLATFORM PLATFORM_LINUX
+#define PLATFORM PLATFORM_LINUX
 #elif defined(__APPLE__) && defined(__MACH__)
-    #include <TargetConditionals.h>
-    #if TARGET_IPHONE_SIMULATOR == 1
-        #define PLATFORM PLATFORM_IOS
-    #elif TARGET_OS_IPHONE == 1
-        #define PLATFORM_NAME PLATFORM_IOS // Apple iOS
-    #elif TARGET_OS_MAC == 1
-        #define PLATFORM PLATFORM_OSX // Apple OSX
-    #endif
-#else 
-    #define PLATFORM_NAME 0
+#include <TargetConditionals.h>
+#if TARGET_IPHONE_SIMULATOR == 1
+#define PLATFORM PLATFORM_IOS
+#elif TARGET_OS_IPHONE == 1
+#define PLATFORM_NAME PLATFORM_IOS // Apple iOS
+#elif TARGET_OS_MAC == 1
+#define PLATFORM PLATFORM_OSX // Apple OSX
+#endif
+#else
+#define PLATFORM_NAME 0
 #endif
 
 #if PLATFORM == PLATFORM_WINDOWS
-    #include "Windows.h"
+#include "Windows.h"
 #endif
 
 #include "assert.h"

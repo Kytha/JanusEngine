@@ -6,29 +6,29 @@ namespace JanusEngine
     class MultiThreadPolicy
     {
     public:
-    inline void Enter(void)
-    {
-        m_primitive.Enter();
-    }
-    
-    inline void Leave(void)
-    {
-        m_primitive.Leave();
-    }
-    
+        inline void Enter(void)
+        {
+            m_primitive.Enter();
+        }
+
+        inline void Leave(void)
+        {
+            m_primitive.Leave();
+        }
+
     private:
-    SynchronizationPrimitive m_primitive;
+        SynchronizationPrimitive m_primitive;
     };
 
     class SingleThreadPolicy
     {
     public:
-    inline void Enter(void)
-    {
-    }
-    
-    inline void Leave(void)
-    {
-    }
+        inline void Enter(void)
+        {
+        }
+
+        inline void Leave(void)
+        {
+        }
     };
-}    
+}

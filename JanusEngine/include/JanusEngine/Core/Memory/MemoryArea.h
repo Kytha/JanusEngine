@@ -6,7 +6,7 @@ class HeapArea
 public:
     HeapArea(size_t size)
     {
-        start = (byte*)malloc(size * sizeof(char));
+        start = (byte *)malloc(size * sizeof(char));
         end = start + size;
         memory = size;
     }
@@ -14,14 +14,14 @@ public:
     {
         free(start);
     }
- 
-    byte* const GetStart() { return start; }
-    byte* const GetEnd() { return end; }
+
+    byte *const GetStart() { return start; }
+    byte *const GetEnd() { return end; }
     size_t GetMemory() { return memory; }
- 
+
 private:
-    byte* start;
-    byte* end;
+    byte *start;
+    byte *end;
     size_t memory;
 };
 
@@ -30,7 +30,7 @@ class StackArea
 public:
     StackArea(size_t size)
     {
-        start = (byte*)alloca(size * sizeof(char));
+        start = (byte *)alloca(size * sizeof(char));
         end = start + size;
         memory = size;
     }
@@ -38,13 +38,13 @@ public:
     {
         free(start);
     }
- 
-    byte* const GetStart() { return start; }
-    byte* const GetEnd() { return end; }
+
+    byte *const GetStart() { return start; }
+    byte *const GetEnd() { return end; }
     size_t GetMemory() { return memory; }
- 
+
 private:
-    byte* start;
-    byte* end;
+    byte *start;
+    byte *end;
     size_t memory;
 };
