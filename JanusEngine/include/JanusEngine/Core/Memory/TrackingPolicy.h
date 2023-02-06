@@ -4,17 +4,23 @@
 
 namespace JanusEngine
 {
+    struct MemoryAllocationInfo
+    {
+        const char *file;
+        int line;
+        size_t size;
+    };
     class NoMemoryTracking
     {
     public:
-        inline void OnAllocation(void *, size_t, size_t, const SourceInfo &) const {}
+        inline void OnAllocation(void *, size_t, size_t, const MemoryAllocationInfo &) const {}
         inline void OnDeallocation(void *) const {}
     };
 
     class SimpleMemoryTracking
     {
     public:
-        inline void OnAllocation(byte *memory, size_t size, size_t alignment, const SourceInfo &sourceInfo) { numOfAllocations++; }
+        inline void OnAllocation(byte *memory, size_t size, size_t alignment, const MemoryAllocationInfo &sourceInfo) { numOfAllocations++; }
         inline void OnDeallocation(byte *memory) { numOfAllocations--; }
         inline size_t GetNumberOfAllocations() { return numOfAllocations; }
 
@@ -22,17 +28,10 @@ namespace JanusEngine
         size_t numOfAllocations;
     };
 
-    struct MemoryAllocationInfo
-    {
-        const char *file;
-        int line;
-        size_t size;
-    };
-
     class MemoryTrackingWithSourceInfo
     {
     public:
-        inline void OnAllocation(byte *memory, size_t size, size_t alignment, SourceInfo &sourceInfo)
+        inline void OnAllocation(byte *memory, size_t size, size_t alignment, MemoryAllocationInfo &sourceInfo)
         {
             allocations.insert(std::make_pair(memory, sourceInfo));
             numOfBytesAllocated += size;
@@ -40,7 +39,7 @@ namespace JanusEngine
 
         inline void OnDeallocation(byte *memory)
         {
-            std::unordered_map<byte *, SourceInfo>::const_iterator got = allocations.find(memory);
+            std::unordered_map<byte *, MemoryAllocationInfo>::const_iterator got = allocations.find(memory);
             if (got == allocations.end())
                 assert(false);
 
@@ -48,12 +47,12 @@ namespace JanusEngine
             allocations.erase(memory);
         }
 
-        inline std::unordered_map<byte *, SourceInfo> &GetAllocations() { return allocations; }
+        inline std::unordered_map<byte *, MemoryAllocationInfo> &GetAllocations() { return allocations; }
         inline size_t GetNumberOfAllocations() { return allocations.size(); }
         inline size_t GetNumOfBytesAllocated() { return numOfBytesAllocated; }
 
     private:
-        std::unordered_map<byte *, SourceInfo> allocations;
+        std::unordered_map<byte *, MemoryAllocationInfo> allocations;
         size_t numOfBytesAllocated = 0;
     };
 }

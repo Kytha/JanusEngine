@@ -28,8 +28,7 @@ namespace JanusEngine
 
         if (cursor >= end)
         {
-            // out of memory
-            std::cout << "Out of memory";
+            // Out of memory
             return nullptr;
         }
 

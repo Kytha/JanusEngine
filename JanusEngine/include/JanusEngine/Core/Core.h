@@ -47,7 +47,26 @@
 #endif
 
 #include "assert.h"
-using byte = uint8_t;
+#include "Core/Breakpoint.h"
 // PROFILER
 
-#include "jnpch.h"
+// LOGGING
+#include "Core/Logging/Log.h"
+
+// UTILITIES
+namespace JanusEngine
+{
+    struct SourceInfo
+    {
+        char const *file;
+        int line;
+        const std::string logGroupName;
+    };
+    using byte = uint8_t;
+}
+
+#define JN_SOURCE_INFO(logGroupName)     \
+    SourceInfo                           \
+    {                                    \
+        __FILE__, __LINE__, logGroupName \
+    }

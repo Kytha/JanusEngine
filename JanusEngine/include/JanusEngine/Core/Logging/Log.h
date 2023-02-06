@@ -1,40 +1,70 @@
 #pragma once
 #include "Core/Core.h"
+#include <spdlog/sinks/stdout_color_sinks.h>
 #include "spdlog/spdlog.h"
 #include "Core/Logging/LogSink.h"
-#include "Core/Logging/LogGroup.h"
 
 namespace JanusEngine
 {
+
     class Log
     {
     public:
-        Log();
-        virtual ~Log();
-
-        static spdlog::logger *getLoggerFromLogGroup(LogGroup logGroup);
-        static inline Log &getInstance()
+        struct LogGroupProps
         {
-            if (instance != nullptr)
-                return *instance;
-            instance = new Log();
-            return *instance;
+            std::string name;
+            std::string formatString;
+        };
+
+        static inline std::shared_ptr<spdlog::logger> getLoggerFromLogGroupName(const std::string &logGroupName)
+        {
+            return spdlog::get(logGroupName);
         }
 
-        void registerLogGroup(const std::string &loggerName);
-        void deregisterLogGroup(const std::string &loggerName);
-        void registerLogSink(LogSink sink);
+        template <typename... Args>
+        static inline void dispatchLog(const std::string &logGroupName, spdlog::level::level_enum level, Args... args)
+        {
+            std::shared_ptr<spdlog::logger> logger = getLoggerFromLogGroupName(logGroupName);
+            if (logger == nullptr)
+                return;
+            switch (level)
+            {
+            case spdlog::level::trace:
+                logger->trace(args...);
+                break;
+            case spdlog::level::debug:
+                logger->debug(args...);
+                break;
+            case spdlog::level::info:
+                logger->info(args...);
+                break;
+            case spdlog::level::warn:
+                logger->warn(args...);
+                break;
+            case spdlog::level::err:
+                logger->error(args...);
+                break;
+            case spdlog::level::critical:
+                logger->critical(args...);
+                break;
+            default:
+                logger->info(args...);
+            }
+        }
 
-    private:
-        static Log *instance;
-        std::unordered_map<std::string, spdlog::logger *> logGroups;
-        std::vector<LogSink> logSinks;
+        static void registerLogGroup(LogGroupProps logGroupProps);
+
+        static inline void deregisterLogGroup(const std::string &logGroupName)
+        {
+            spdlog::drop(logGroupName);
+        }
+
+        void registerLogSink(LogSink sink);
     };
 }
-
-#define JN_TRACE(logGroup, ...) Log::getLoggerFromLogGroup()->trace(__VA_ARGS__)
-#define JN_DEBUG(logGroup, ...) Log::getLoggerFromLogGroup()->debug(__VA_ARGS__)
-#define JN_INFO(logGroup, ...) Log::getLoggerFromLogGroup()->info(__VA_ARGS__)
-#define JN_WARN(logGroup, ...) Log::getLoggerFromLogGroup()->warn(__VA_ARGS__)
-#define JN_ERROR(logGroup, ...) Log::getLoggerFromLogGroup()->error(__VA_ARGS__)
-#define JN_CRITICAL(logGroup, ...) Log::getLoggerFromLogGroup()->critical(__VA_ARGS__)
+#define JN_TRACE(logGroup, ...) Log::dispatchLog(logGroup, spdlog::level::trace, __VA_ARGS__)
+#define JN_DEBUG(logGroup, ...) Log::dispatchLog(logGroup, spdlog::level::debug, __VA_ARGS__)
+#define JN_INFO(logGroup, ...) Log::dispatchLog(logGroup, spdlog::level::info, __VA_ARGS__)
+#define JN_WARN(logGroup, ...) Log::dispatchLog(logGroup, spdlog::level::warn, __VA_ARGS__)
+#define JN_ERROR(logGroup, ...) Log::dispatchLog(logGroup, spdlog::level::err, __VA_ARGS__)
+#define JN_CRITICAL(logGroup, ...) Log::dispatchLog(logGroup, spdlog::level::critical, __VA_ARGS__)

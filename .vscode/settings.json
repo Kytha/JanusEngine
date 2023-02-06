@@ -99,6 +99,10 @@
     "stack": "cpp",
     "string_view": "cpp",
     "thread": "cpp",
-    "variant": "cpp"
+    "variant": "cpp",
+    "filesystem": "cpp",
+    "stop_token": "cpp",
+    "xlocbuf": "cpp",
+    "xlocmes": "cpp"
   }
 }

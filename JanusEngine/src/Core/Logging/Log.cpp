@@ -1,32 +1,20 @@
-
 #include "Core/Logging/Log.h"
 
 namespace JanusEngine
 {
-    Log::Log()
+    void Log::registerLogGroup(LogGroupProps logGroupProps)
     {
-        assert(instance == nullptr);
-        instance = this;
-    }
-
-    Log::~Log()
-    {
-    }
-
-    spdlog::logger *Log::getLoggerFromLogGroup(LogGroup logGroup)
-    {
-        return nullptr;
-    }
-
-    void Log::registerLogGroup(const std::string &loggerName)
-    {
-    }
-
-    void Log::deregisterLogGroup(const std::string &loggerName)
-    {
-    }
-
-    void Log::registerLogSink(LogSink sink)
-    {
+        {
+            try
+            {
+                std::shared_ptr<spdlog::logger> logger = spdlog::stdout_color_mt(logGroupProps.name);
+                logger->set_pattern(logGroupProps.formatString);
+                logger->set_level(spdlog::level::trace);
+            }
+            catch (const spdlog::spdlog_ex &ex)
+            {
+                std::cout << "Log initialization failed: " << ex.what() << std::endl;
+            }
+        }
     }
 }

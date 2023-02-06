@@ -22,12 +22,12 @@ namespace JanusEngine
             const size_t newSize = size + BoundsCheckingPolicy::SIZE_FRONT + BoundsCheckingPolicy::SIZE_BACK;
 
             byte *plainMemory = static_cast<byte *>(allocator.Allocate(newSize, alignment, BoundsCheckingPolicy::SIZE_FRONT));
+            JN_ASSERT("CORE", plainMemory != nullptr, "Out of memory");
             boundsChecker.GuardFront(plainMemory);
             memoryTagger.TagAllocation(plainMemory + BoundsCheckingPolicy::SIZE_FRONT, originalSize);
             boundsChecker.GuardBack(plainMemory + BoundsCheckingPolicy::SIZE_FRONT + originalSize);
 
-            sourceInfo.size = newSize;
-            memoryTracker.OnAllocation(plainMemory, newSize, alignment, sourceInfo);
+            memoryTracker.OnAllocation(plainMemory, newSize, alignment, MemoryAllocationInfo{sourceInfo.file, sourceInfo.line, newSize});
 
             threadGuard.Leave();
 
