@@ -1,4 +1,4 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.14)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.25)
 PROJECT (JanusEngine LANGUAGES CXX C)
 SET(CMAKE_CXX_STANDARD 17)
 
@@ -33,6 +33,7 @@ SET ( JANUS_ENGINE_HEADERS
 ############################# DEPENDENCIES ###########################################
 
 ADD_SUBDIRECTORY(vendors/spdlog)
+ADD_SUBDIRECTORY(vendors/ftl)
 
 ADD_LIBRARY ( JanusEngine STATIC
   ${JANUS_ENGINE_SOURCE}
@@ -41,9 +42,11 @@ ADD_LIBRARY ( JanusEngine STATIC
 
 TARGET_INCLUDE_DIRECTORIES( JanusEngine PUBLIC include/JanusEngine)
 TARGET_INCLUDE_DIRECTORIES( JanusEngine PUBLIC vendors/spdlog/include)
+TARGET_INCLUDE_DIRECTORIES( JanusEngine PUBLIC vendors/ftl/include)
 
 
 TARGET_LINK_LIBRARIES( JanusEngine PUBLIC spdlog)
+TARGET_LINK_LIBRARIES( JanusEngine PUBLIC ftl)
 
 ############################# INSTALLATION ###########################################
 
