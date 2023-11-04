@@ -1,8 +1,8 @@
 [submodule "JanusEngine/vendors/spdlog"]
 	path = JanusEngine/vendors/spdlog
 	url = https://github.com/gabime/spdlog.git
-[submodule "JanusEngine\\vendors\\ftl"]
-	path = JanusEngine\\vendors\\ftl
+[submodule "JanusEngine/vendors/ftl"]
+	path = JanusEngine/vendors/ftl
 	url = https://github.com/RichieSams/FiberTaskingLib.git
 [submodule "JanusEngine/vendors/glfw"]
 	path = JanusEngine/vendors/glfw
