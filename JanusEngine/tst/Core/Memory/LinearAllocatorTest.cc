@@ -2,7 +2,7 @@
 #include "Core/Memory/Memory.h"
 namespace JanusEngine
 {
-    TEST(LinearAllocator, SinlgePODAllocation)
+    TEST(LinearAllocator, SinglePODAllocation)
     {
         int TEST_DATA = 10;
         int HEAP_SIZE = 1024;

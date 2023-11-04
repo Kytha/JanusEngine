@@ -4,3 +4,6 @@
 [submodule "JanusEngine\\vendors\\ftl"]
 	path = JanusEngine\\vendors\\ftl
 	url = https://github.com/RichieSams/FiberTaskingLib.git
+[submodule "JanusEngine/vendors/glfw"]
+	path = JanusEngine/vendors/glfw
+	url = https://github.com/glfw/glfw.git

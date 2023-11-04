@@ -34,6 +34,7 @@ SET ( JANUS_ENGINE_HEADERS
 
 ADD_SUBDIRECTORY(vendors/spdlog)
 ADD_SUBDIRECTORY(vendors/ftl)
+ADD_SUBDIRECTORY(vendors/glfw)
 
 ADD_LIBRARY ( JanusEngine STATIC
   ${JANUS_ENGINE_SOURCE}
@@ -42,6 +43,10 @@ ADD_LIBRARY ( JanusEngine STATIC
 
 TARGET_INCLUDE_DIRECTORIES( JanusEngine PUBLIC include/JanusEngine)
 TARGET_INCLUDE_DIRECTORIES( JanusEngine PUBLIC vendors/spdlog/include)
+TARGET_INCLUDE_DIRECTORIES( JanusEngine PUBLIC vendors/glfw/include)
+
+
+TARGET_LINK_LIBRARIES( JanusEngine PUBLIC spdlog PUBLIC glfw)
 TARGET_INCLUDE_DIRECTORIES( JanusEngine PUBLIC vendors/ftl/include)
 
 
