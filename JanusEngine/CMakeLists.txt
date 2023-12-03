@@ -33,13 +33,16 @@ SET ( JANUS_ENGINE_HEADERS
 ############################# DEPENDENCIES ###########################################
 
 ADD_SUBDIRECTORY(vendors/spdlog)
+
+SET(FTL_FIBER_STACK_GUARD_PAGES ON CACHE BOOL "Enable stack guard pages" FORCE)
 ADD_SUBDIRECTORY(vendors/ftl)
+
 ADD_SUBDIRECTORY(vendors/glfw)
 
 ADD_LIBRARY ( JanusEngine STATIC
   ${JANUS_ENGINE_SOURCE}
   ${JANUS_ENGINE_HEADERS}
-  )
+)
 
 TARGET_INCLUDE_DIRECTORIES( JanusEngine PUBLIC include/JanusEngine)
 TARGET_INCLUDE_DIRECTORIES( JanusEngine PUBLIC vendors/spdlog/include)
@@ -65,6 +68,7 @@ INSTALL ( TARGETS JanusEngine DESTINATION lib )
 
 SET( JANUS_ENGINE_TEST_SOURCE
   tst/Core/Memory/LinearAllocatorTest.cc
+  tst/ftl/FtlTest.cc
 )
 
 SET(DOWNLOAD_EXTRACT_TIMESTAMP true)
